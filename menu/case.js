@@ -100,7 +100,11 @@ async function handleCommand(conn, msg) {
   }
 
   // 🔸 Mode restrictions
-  if (global.mode === "self" && !isOwner && !["menu", "repo", "idcheck"].includes(command)) {
+  const publicMenuCommands = [
+    "menu", "repo", "idcheck", "custommenu", "premiummenu", "cheemsmenu",
+    "ownermenu", "automenu", "groupmenu", "utilitymenu"
+  ];
+  if (global.mode === "self" && !isOwner && !publicMenuCommands.includes(command)) {
     return;
   }
 
@@ -109,7 +113,10 @@ async function handleCommand(conn, msg) {
   }
 
   // 🔸 Direct calls
-  if (["menu", "repo", "idcheck", "antidelete"].includes(command)) {
+  if ([
+    "menu", "repo", "idcheck", "custommenu", "premiummenu", "cheemsmenu",
+    "ownermenu", "automenu", "groupmenu", "utilitymenu", "antidelete"
+  ].includes(command)) {
     return runCommand({
       conn,
       msg,
