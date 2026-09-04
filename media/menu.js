@@ -24,9 +24,22 @@ const verified = {
 ║ 👥 .groupmenu
 ║ 🔧 .utilitymenu
 ║ 👑 .ownermenu
+║ 🧩 .custommenu
 ╚════════════════════╝
 
 📢 Channel: ${CHANNEL_URL}`,
+  custom: `${statusBox()}
+
+╔═❖•⊰ *𝗢𝗡𝗘-𝗙𝗜𝗟𝗘 𝗖𝗨𝗦𝗧𝗢𝗠 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦* ⊱•❖═╗
+║ 📁 Add one file: commands/<name>.js
+║ ▶️ Use it with: .<name>
+║ 🧩 Example: .example
+║ 🔄 Restart after adding a file
+║ ✅ Supports async function(sock, target)
+║ ✅ Supports module.exports({ reply, args })
+╚════════════════════╝
+
+📖 See commands/README.md for the format.`,
   owner: `${statusBox()}
 
 ╔═❖•⊰ *𝗢𝗪𝗡𝗘𝗥 𝗧𝗢𝗢𝗟𝗦* ⊱•❖═╗
@@ -106,6 +119,7 @@ Use .premiummenu to view the working commands.`;
 module.exports = {
   menu: verified.main,
   ownermenu: verified.owner,
+  custommenu: verified.custom,
   automenu: verified.auto,
   groupmenu: verified.group,
   utilitymenu: verified.utility,
