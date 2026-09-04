@@ -27,6 +27,15 @@ const verified = {
 ║ 🧩 .custommenu
 ╚════════════════════╝
 
+╔═❖•⊰ *𝗪𝗢𝗥𝗞𝗜𝗡𝗚 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦* ⊱•❖═╗
+║ 💎 .premium     🐙 .github <search>
+║ 🌤 .weather <city>   📖 .define <word>
+║ 💬 .quote       📱 .qr <text or link>
+║ 📊 .poll Q | Option 1 | Option 2
+║ 🔗 .invite      📝 .groupdesc
+║ 🌐 .links       🏓 .ping
+╚════════════════════╝
+
 📢 Channel: ${CHANNEL_URL}`,
   custom: `${statusBox()}
 

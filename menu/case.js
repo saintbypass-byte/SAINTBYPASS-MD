@@ -102,7 +102,11 @@ async function handleCommand(conn, msg) {
   // 🔸 Mode restrictions
   const publicMenuCommands = [
     "menu", "repo", "idcheck", "custommenu", "premiummenu", "cheemsmenu",
-    "ownermenu", "automenu", "groupmenu", "utilitymenu"
+    "ownermenu", "automenu", "groupmenu", "utilitymenu", "premium",
+    "ping", "uptime", "status", "time", "date", "jid", "owner", "channel",
+    "textcount", "reverse", "uppercase", "lowercase", "base64", "unbase64", "calc",
+    "groupinfo", "admins", "members", "github", "weather", "define", "quote", "qr",
+    "poll", "invite", "groupdesc", "links", "example"
   ];
   if (global.mode === "self" && !isOwner && !publicMenuCommands.includes(command)) {
     return;
