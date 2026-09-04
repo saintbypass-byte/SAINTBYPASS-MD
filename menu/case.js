@@ -188,6 +188,17 @@ async function runCommand({
       return toggleAntidelete({ conn, m: msg, args, reply, jid: chatId });
     }
 
+    // 🔸 one-file custom commands: commands/<command>.js
+    if (/^[a-z0-9_-]+$/.test(command)) {
+      const customPath = path.join(__dirname, "..", "commands", `${command}.js`);
+      if (fs.existsSync(customPath)) {
+        const commandFile = require(customPath);
+        const context = { conn, m: msg, args, command, jid: chatId, isGroup, sender: senderNum, reply };
+        if (typeof commandFile === "function") return await commandFile(context);
+        if (typeof commandFile.run === "function") return await commandFile.run(context);
+      }
+    }
+
     // 🔸 core functions
     if (core && core[command] && typeof core[command] === "function") {
       return await core[command]({
@@ -202,16 +213,13 @@ async function runCommand({
       });
     }
 
-    // 🔸 individual command files
+    // 🔸 legacy root-level command files
     const filePath = path.join(__dirname, "..", `${command}.js`);
     if (fs.existsSync(filePath)) {
       const commandFile = require(filePath);
-      if (typeof commandFile === "function") {
-        return await commandFile({ conn, m: msg, args, command, jid: chatId, isGroup, sender: senderNum, reply });
-      }
-      if (typeof commandFile.run === "function") {
-        return await commandFile.run({ conn, m: msg, args, command, jid: chatId, isGroup, sender: senderNum, reply });
-      }
+      const context = { conn, m: msg, args, command, jid: chatId, isGroup, sender: senderNum, reply };
+      if (typeof commandFile === "function") return await commandFile(context);
+      if (typeof commandFile.run === "function") return await commandFile.run(context);
     }
 
     // 🔸 unknown command
