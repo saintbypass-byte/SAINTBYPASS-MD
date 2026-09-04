@@ -13,10 +13,11 @@ const { loadSettings } = require("./settings");
 const { storeMessage, handleMessageRevocation } = require("./antidelete");
 const AntiLinkKick = require("./antilinkick.js");
 const { antibugHandler } = require("./antibug.js"); // ✅ import correct function
-
+const { Boom } = require("@hapi/boom");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 const question = (text) => new Promise((resolve) => rl.question(text, resolve));
-
+let reconnectTimer = null;
+let reconnecting = false;
 async function startBot() {
   console.log("\n╔══════════════════════════════════════════════════════╗");
   console.log("║  WELCOME TO 𓆩 𝑺𝑨𝑰𝑵𝑻𝑩𝒀𝑷𝑨𝑺𝑺 𓆪                         ║");
@@ -58,10 +59,22 @@ async function startBot() {
       rl.close();  
     }  
 
-    if (connection === "close") {  
-      const shouldReconnect = (lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut);  
-      console.log("❌ Disconnected. Reconnecting:", shouldReconnect);  
-      if (shouldReconnect) startBot();  
+    if (connection === "close") {
+      const statusCode = new Boom(lastDisconnect?.error)?.output?.statusCode;
+      const shouldReconnect = statusCode !== DisconnectReason.loggedOut;
+      console.log("❌ Disconnected. Status:", statusCode || "unknown");
+      if (!shouldReconnect) {
+        console.log("🔒 Logged out. Delete auth_info and pair again if needed.");
+        return;
+      }
+      if (reconnecting || reconnectTimer) return;
+      reconnecting = true;
+      console.log("🔄 Reconnecting in 5 seconds...");
+      reconnectTimer = setTimeout(() => {
+        reconnectTimer = null;
+        reconnecting = false;
+        startBot().catch((err) => console.error("❌ Reconnect failed:", err.message));
+      }, 5000);
     }
   });
 
@@ -230,19 +243,11 @@ async function startBot() {
 
   // ✅ Pairing code
   if (!state.creds?.registered) {
-    const phoneNumber = await question("📱 Enter your WhatsApp number (with country code): ");
-    await sock.requestPairingCode(phoneNumber.trim());
-
-    setTimeout(() => {  
-      const code = sock.authState.creds?.pairingCode;  
-      if (code) {  
-        console.log("\n🔗 Pair this device using this code in WhatsApp:\n");  
-        console.log("   " + code + "\n");  
-        console.log("Go to WhatsApp → Linked Devices → Link with code.");  
-      } else {  
-        console.log("❌ Pairing code not found.");  
-      }  
-    }, 1000);
+        const phoneNumber = await question("📱 Enter your WhatsApp number (with country code): ");
+    const code = await sock.requestPairingCode(phoneNumber.trim());
+    console.log("\n🔗 Pair this device using this code in WhatsApp:\n");
+    console.log("   " + code + "\n");
+    console.log("Go to WhatsApp → Linked Devices → Link with code.");
   }
 }
 
