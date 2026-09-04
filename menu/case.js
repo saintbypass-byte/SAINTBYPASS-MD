@@ -194,8 +194,16 @@ async function runCommand({
       if (fs.existsSync(customPath)) {
         const commandFile = require(customPath);
         const context = { conn, m: msg, args, command, jid: chatId, isGroup, sender: senderNum, reply };
-        if (typeof commandFile === "function") return await commandFile(context);
-        if (typeof commandFile.run === "function") return await commandFile.run(context);
+        if (typeof commandFile === "function") {
+          return commandFile.length >= 2
+            ? await commandFile(conn, chatId, args, msg)
+            : await commandFile(context);
+        }
+        if (typeof commandFile.run === "function") {
+          return commandFile.run.length >= 2
+            ? await commandFile.run(conn, chatId, args, msg)
+            : await commandFile.run(context);
+        }
       }
     }
 
