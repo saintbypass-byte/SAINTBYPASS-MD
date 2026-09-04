@@ -18,6 +18,10 @@ const rl = readline.createInterface({ input: process.stdin, output: process.stdo
 const question = (text) => new Promise((resolve) => rl.question(text, resolve));
 
 async function startBot() {
+  console.log("\n╔══════════════════════════════════════════════════════╗");
+  console.log("║  WELCOME TO 𓆩 𝑺𝑨𝑰𝑵𝑻𝑩𝒀𝑷𝑨𝑺𝑺 𓆪                         ║");
+  console.log("║  https://t.me/saintbypassstarlink                    ║");
+  console.log("╚══════════════════════════════════════════════════════╝\n");
   const { state, saveCreds } = await useMultiFileAuthState("auth_info");
   const { version } = await fetchLatestBaileysVersion();
 
