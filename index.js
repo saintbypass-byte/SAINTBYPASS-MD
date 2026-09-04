@@ -79,8 +79,10 @@ async function startBot() {
   });
 
   sock.ev.on("messages.upsert", async ({ messages }) => {
+    if (!Array.isArray(messages) || messages.length === 0) return;
     const msg = messages[0];
-    const jid = msg.key.remoteJid;
+    const jid = msg?.key?.remoteJid;
+    if (!jid || !msg.message) return;
     const text = msg.message?.conversation || msg.message?.extendedTextMessage?.text || "";
 
     // ✅ AntiDelete
@@ -251,4 +253,7 @@ async function startBot() {
   }
 }
 
-startBot();
+startBot().catch((err) => {
+  console.error("❌ Bot startup failed:", err.message || err);
+  process.exitCode = 1;
+});
