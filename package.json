@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Tayyab",
+  "author": "saintbypass",
   "license": "MIT",
   "directories": {
     "lib": "lib",
