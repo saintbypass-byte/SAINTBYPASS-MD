@@ -1,5 +1,19 @@
+const fs = require("fs");
+const path = require("path");
 const CHANNEL_URL = "https://t.me/sourcecodemarket666";
 const REPO_URL = "https://github.com/saintbypass-byte/SAINTBYPASS-MD";
+const coreCommandNames = "ping uptime status time date jid owner repo channel premium textcount reverse uppercase lowercase base64 unbase64 calc groupinfo admins members premiummenu github weather define quote qr poll invite groupdesc links";
+const customCommandNames = (() => {
+  try {
+    return fs.readdirSync(path.join(__dirname, "..", "commands"))
+      .filter((file) => file.endsWith(".js"))
+      .map((file) => `.${file.replace(/\.js$/, "")}`)
+      .join(" ");
+  } catch {
+    return "(no custom files found)";
+  }
+})();
+const allWorkingCommands = `${coreCommandNames} ${customCommandNames}`;
 
 function statusBox() {
   const now = new Date();
@@ -36,6 +50,10 @@ const verified = {
 ║ 🌐 .links       🏓 .ping
 ╚════════════════════╝
 
+╔═❖•⊰ *𝗔𝗟𝗟 𝗪𝗢𝗥𝗞𝗜𝗡𝗚 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦* ⊱•❖═╗
+║ ${allWorkingCommands}
+╚════════════════════╝
+
 📢 Channel: ${CHANNEL_URL}`,
   custom: `${statusBox()}
 
@@ -43,6 +61,7 @@ const verified = {
 ║ 📁 Add one file: commands/<name>.js
 ║ ▶️ Use it with: .<name>
 ║ 🧩 Example: .example
+║ 📋 Current files: ${customCommandNames}
 ║ 🔄 Restart after adding a file
 ║ ✅ Supports async function(sock, target)
 ║ ✅ Supports module.exports({ reply, args })
