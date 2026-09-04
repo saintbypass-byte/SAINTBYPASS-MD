@@ -159,8 +159,20 @@ async function runCommand({
       );
     }
 
-    // 🔸 menu message
+    // 🔸 menu message with media-folder image
     if (menuData[command]) {
+      const imagePath = path.join(__dirname, "..", "media", "HELL.jpg");
+      if (fs.existsSync(imagePath)) {
+        try {
+          return await conn.sendMessage(chatId, {
+            image: fs.readFileSync(imagePath),
+            caption: menuData[command],
+            jpegThumbnail: fs.readFileSync(imagePath)
+          }, { quoted: msg });
+        } catch (imageError) {
+          console.error("❌ Menu image error:", imageError.message);
+        }
+      }
       const menuMessage = generateWAMessageFromContent(
         chatId,
         { extendedTextMessage: { text: menuData[command] } },
