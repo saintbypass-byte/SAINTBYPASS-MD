@@ -1,6 +1,7 @@
 const os = require("os");
 const fs = require("fs");
 const path = require("path");
+const cheemsFeatures = require("./features/cheems");
 
 const CHANNEL_URL = "https://t.me/sourcecodemarket666";
 const REPO_URL = "https://github.com/saintbypass-byte/SAINTBYPASS-MD";
@@ -76,4 +77,4 @@ const commands = {
   announce: async ({ m, sender, args, reply }) => { if (!requireOwner(m, sender, reply)) return; const text = args.join(" ").trim(); reply(text ? `📣 ANNOUNCEMENT READY\n${text}` : "Usage: .announce <message>"); }
 };
 
-module.exports = commands;
+module.exports = { ...commands, ...cheemsFeatures };

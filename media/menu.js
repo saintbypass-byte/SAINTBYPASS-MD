@@ -19,6 +19,7 @@ const verified = {
 
 ╔═❖•⊰ *𝗩𝗘𝗥𝗜𝗙𝗜𝗘𝗗 𝗠𝗘𝗡𝗨* ⊱•❖═╗
 ║ 🧬 .premiummenu
+║ 🐾 .cheemsmenu
 ║ 🛡 .automenu
 ║ 👥 .groupmenu
 ║ 🔧 .utilitymenu
@@ -68,6 +69,20 @@ const verified = {
 ║ 🔐 .base64 <text>       🔓 .unbase64 <text>
 ║ 🧮 .calc <expression>
 ╚════════════════════╝`,
+  cheems: `${statusBox()}
+
+╔═❖•⊰ *𝗦𝗔𝗜𝗡𝗧𝗕𝗬𝗣𝗔𝗦𝗦 𝗣𝗥𝗢 𝗧𝗢𝗢𝗟𝗦* ⊱•❖═╗
+║ 🐙 .github <search>
+║ 🌤 .weather <city>
+║ 📖 .define <word>
+║ 💬 .quote
+║ 📱 .qr <text or link>
+║ 📊 .poll Question | Option 1 | Option 2
+║ 🔗 .invite   📝 .groupdesc
+║ 🌐 .links
+╚════════════════════╝
+
+📢 Channel: ${CHANNEL_URL}`,
   premium: `${statusBox()}
 
 ╔═❖•⊰ *𝗣𝗥𝗘𝗠𝗜𝗨𝗠 𝗧𝗢𝗢𝗟𝗦* ⊱•❖═╗
@@ -95,6 +110,7 @@ module.exports = {
   groupmenu: verified.group,
   utilitymenu: verified.utility,
   premiummenu: verified.premium,
+  cheemsmenu: verified.cheems,
   downloadmenu: unavailable,
   aimenu: unavailable,
   githubmenu: unavailable,
